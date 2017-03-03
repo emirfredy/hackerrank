@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 import co.com.rappi.cubes.model.Coordinate;
 import co.com.rappi.cubes.util.CoordinateUtil;
 
@@ -16,6 +19,7 @@ import co.com.rappi.cubes.util.CoordinateUtil;
  * 
  * @author <a href="emirfredy@gmail.com">Emir Cortes Trujillo</a>
  */
+@SpringBootApplication
 public class Solution {
 
 	/** The smallest coordinate that can be used in a cube */
@@ -30,6 +34,7 @@ public class Solution {
 	 *            The arguments sent from command line. Not used in this stage
 	 */
 	public static void main(String[] args) {
+		SpringApplication.run(Solution.class, args);
 
 		Scanner scanner = new Scanner(System.in);
 		int t = scanner.nextInt();
