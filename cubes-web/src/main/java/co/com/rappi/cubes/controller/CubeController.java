@@ -7,6 +7,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import co.com.rappi.cubes.model.Problem;
 import co.com.rappi.cubes.model.Query;
 import co.com.rappi.cubes.model.Update;
+import co.com.rappi.cubes.service.CubeService;
 
 /**
  * The controller that exposes the problem end points
@@ -32,6 +34,13 @@ import co.com.rappi.cubes.model.Update;
 public class CubeController {
 
 	/**
+	 * The Service that provides solving problems capabilities and storage
+	 * services
+	 */
+	@Autowired
+	private CubeService cubeService;
+
+	/**
 	 * Creates a new {@link Problem} to which updates and queries can be added
 	 * later
 	 * 
@@ -41,7 +50,8 @@ public class CubeController {
 	 */
 	@PostMapping()
 	public ResponseEntity<Long> createProblem(@RequestBody Problem problem) {
-		return new ResponseEntity<Long>(new Long(1), HttpStatus.OK);
+		Long id = cubeService.create(problem);
+		return new ResponseEntity<Long>(id, HttpStatus.OK);
 	}
 
 	/**
@@ -54,7 +64,7 @@ public class CubeController {
 	@GetMapping("/{id}")
 	public ResponseEntity<Problem> getProblem(@PathVariable("id") Long id) {
 
-		Problem problem = new Problem();
+		Problem problem = cubeService.find(id);
 
 		if (problem != null) {
 			return new ResponseEntity<Problem>(problem, HttpStatus.OK);
@@ -74,8 +84,7 @@ public class CubeController {
 	 */
 	@PutMapping("{id}/query")
 	public ResponseEntity<Void> addQuery(@PathVariable("id") Long id, @RequestBody Query query) {
-		Problem problem = new Problem();
-		problem.addQuery(query);
+		cubeService.addQuery(id, query);
 
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
@@ -91,8 +100,7 @@ public class CubeController {
 	 */
 	@PutMapping("{id}/update")
 	public ResponseEntity<Void> addUpdate(@PathVariable("id") Long id, @RequestBody Update update) {
-		Problem problem = new Problem();
-		problem.addUpdate(update);
+		cubeService.addUpdate(id, update);
 
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
@@ -112,19 +120,14 @@ public class CubeController {
 	}
 
 	/**
-	 * Returns a sample {@link Problem} formatted in json
+	 * Returns a sample {@link Problem}
 	 * 
-	 * @return An example {@link Problem} formatted in json
+	 * @return An example {@link Problem}
 	 */
 	@GetMapping()
-	public ResponseEntity<Problem> getSampleProble() {
+	public ResponseEntity<Problem> getSampleProblem() {
 
-		Problem problem = new Problem(5);
-		problem.addUpdate(new Update(1, 1, 1, new BigInteger("21")));
-		problem.addQuery(new Query(1, 1, 1, 4, 4, 4));
-		problem.addUpdate(new Update(2, 1, 1, new BigInteger("50")));
-		problem.addQuery(new Query(2, 2, 2, 5, 5, 5));
-		problem.addQuery(new Query(1, 1, 1, 3, 3, 3));
+		Problem problem = cubeService.getSample();
 		return new ResponseEntity<Problem>(problem, HttpStatus.OK);
 	}
 
