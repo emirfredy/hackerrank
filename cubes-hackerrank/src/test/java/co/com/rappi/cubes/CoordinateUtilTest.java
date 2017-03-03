@@ -10,6 +10,9 @@ import java.util.Map;
 
 import org.junit.Test;
 
+import co.com.rappi.cubes.model.Coordinate;
+import co.com.rappi.cubes.util.CoordinateUtil;
+
 
 /**
  * For this validation prototype everything will be in one file since
