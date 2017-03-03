@@ -1,11 +1,14 @@
 package co.com.rappi.cubes.service;
 
+import java.math.BigInteger;
+import java.util.List;
+
 import co.com.rappi.cubes.model.Problem;
 import co.com.rappi.cubes.model.Query;
 import co.com.rappi.cubes.model.Update;
 
 /**
- * The service that provides problem solving capabilities
+ * The service for problem related duties
  * 
  * @author <a href="emirfredy@gmail.com">Emir Cortes Trujillo</a>
  */
@@ -55,5 +58,15 @@ public interface CubeService {
 	 * @return A sample {@link Problem}
 	 */
 	Problem getSample();
+
+	/**
+	 * Solves a {@link Problem} identified by its id
+	 * 
+	 * @param id
+	 *            The id of the {@link Problem}
+	 * @return A list of the sums resulting from {@link Query} the of the
+	 *         {@link Problem}
+	 */
+	List<BigInteger> solve(Long id);
 
 }

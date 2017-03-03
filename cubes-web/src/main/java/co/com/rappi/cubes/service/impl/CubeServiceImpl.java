@@ -1,9 +1,7 @@
-/**
- * 
- */
 package co.com.rappi.cubes.service.impl;
 
 import java.math.BigInteger;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +11,7 @@ import co.com.rappi.cubes.model.Problem;
 import co.com.rappi.cubes.model.Query;
 import co.com.rappi.cubes.model.Update;
 import co.com.rappi.cubes.service.CubeService;
+import co.com.rappi.cubes.service.util.SolverUtil;
 
 /**
  * Default implementation of {@link CubeService} interface
@@ -21,10 +20,14 @@ import co.com.rappi.cubes.service.CubeService;
  */
 @Service
 public class CubeServiceImpl implements CubeService {
-
+	
 	/** The repository that provides access to {@link Problem} */
 	@Autowired
 	private ProblemRepository problemRepository;
+	
+	/** The utility that helps to solve problems */
+	@Autowired
+	SolverUtil solverUtil;
 
 	/*
 	 * (non-Javadoc)
@@ -93,4 +96,15 @@ public class CubeServiceImpl implements CubeService {
 		return problem;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see co.com.rappi.cubes.service.CubeService#solve(java.lang.Long)
+	 */
+	@Override
+	public List<BigInteger> solve(Long id) {
+		Problem problem = problemRepository.findOne(id);
+		List<BigInteger> sums = solverUtil.solve(problem);
+		problemRepository.delete(problem);
+		return sums;
+	}
 }

@@ -44,7 +44,7 @@ public class CoordinateUtil {
 	/**
 	 * Checks whether a {@link Coordinate} is a range
 	 * 
-	 * @param coordinate
+	 * @param evaluated
 	 *            The {@link Coordinate} to be evaluated
 	 * @param firstCorner
 	 *            The {@link Coordinate} defining where the range for validation
@@ -54,7 +54,7 @@ public class CoordinateUtil {
 	 *            ends
 	 * @return
 	 */
-	public static boolean isCoordinateInRange(Coordinate coordinate, Coordinate firstCorner, Coordinate lastCorner) {
-		return coordinate.greaterOrEqualThan(firstCorner) && coordinate.lessOrEqualThan(lastCorner);
+	public static boolean isCoordinateInRange(Coordinate evaluated, Coordinate firstCorner, Coordinate lastCorner) {
+		return evaluated.greaterOrEqualThan(firstCorner) && evaluated.lessOrEqualThan(lastCorner);
 	}
 }

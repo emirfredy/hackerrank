@@ -4,7 +4,6 @@
 package co.com.rappi.cubes.controller;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -113,10 +112,9 @@ public class CubeController {
 	 * @return A list of summations
 	 */
 	@DeleteMapping("/{id}")
-	public List<BigInteger> solveCube(@PathVariable("id") Long id) {
+	public List<BigInteger> solveProblem(@PathVariable("id") Long id) {
 
-		List<BigInteger> sums = new ArrayList<>();
-		return sums;
+		return cubeService.solve(id);
 	}
 
 	/**
