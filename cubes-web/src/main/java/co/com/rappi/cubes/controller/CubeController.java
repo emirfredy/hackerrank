@@ -3,6 +3,8 @@
  */
 package co.com.rappi.cubes.controller;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -16,7 +18,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import co.com.rappi.cubes.model.Problem;
 import co.com.rappi.cubes.model.Query;
@@ -127,6 +131,29 @@ public class CubeController {
 
 		Problem problem = cubeService.getSample();
 		return new ResponseEntity<Problem>(problem, HttpStatus.OK);
+	}
+
+	/**
+	 * Uploads a file with the test suites as described in hackerrank.com
+	 * 
+	 * @param name
+	 *            The name to use to save the file
+	 * @param description
+	 *            The description of the file
+	 * @param file
+	 *            The file
+	 * @return An entity response containing a status code depending on whether
+	 *         the file was uploaded or not
+	 * 
+	 * @throws IOException
+	 *             When there's a problem
+	 */
+	@PostMapping("/batch")
+	public List<BigInteger> uploadAttachment(@RequestParam MultipartFile file)
+			throws IOException {
+		InputStream inputStream = file.getInputStream();
+		List<BigInteger> sums = cubeService.solveInBatch(inputStream);
+		return sums;
 	}
 
 }

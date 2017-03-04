@@ -1,5 +1,6 @@
 package co.com.rappi.cubes.service.impl;
 
+import java.io.InputStream;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -106,5 +107,15 @@ public class CubeServiceImpl implements CubeService {
 		List<BigInteger> sums = solverUtil.solve(problem);
 		problemRepository.delete(problem);
 		return sums;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see co.com.rappi.cubes.service.CubeService#solveInBatch(java.io.InputStream)
+	 */
+	@Override
+	public List<BigInteger> solveInBatch(InputStream inputStream) {
+
+		return solverUtil.solveInBatch(inputStream);
 	}
 }

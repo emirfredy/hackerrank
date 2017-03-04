@@ -1,5 +1,6 @@
 package co.com.rappi.cubes.service;
 
+import java.io.InputStream;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -68,5 +69,16 @@ public interface CubeService {
 	 *         {@link Problem}
 	 */
 	List<BigInteger> solve(Long id);
+
+	/**
+	 * Solves a problem set read from a {@link InputStream} given in the format
+	 * described at:
+	 * https://www.hackerrank.com/contests/101jan14/challenges/cube-summation
+	 * 
+	 * @param inputStream
+	 *            The {@link InputStream} containing the problem set
+	 * @return A list of the sums resulting sums given the queries
+	 */
+	List<BigInteger> solveInBatch(InputStream inputStream);
 
 }

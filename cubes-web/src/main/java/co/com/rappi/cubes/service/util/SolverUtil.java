@@ -1,15 +1,16 @@
 package co.com.rappi.cubes.service.util;
 
+import java.io.InputStream;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Scanner;
 import java.util.Set;
 
 import org.springframework.stereotype.Service;
-
-import java.util.Map.Entry;
 
 import co.com.rappi.cubes.model.Coordinate;
 import co.com.rappi.cubes.model.Problem;
@@ -116,6 +117,62 @@ public class SolverUtil {
 	 */
 	public boolean isCoordinateInRange(Coordinate evaluated, Coordinate firstCorner, Coordinate lastCorner) {
 		return evaluated.greaterOrEqualThan(firstCorner) && evaluated.lessOrEqualThan(lastCorner);
+	}
+
+	/**
+	 * Solves a problem set read from a {@link InputStream} given in the format
+	 * described at:
+	 * https://www.hackerrank.com/contests/101jan14/challenges/cube-summation
+	 * 
+	 * @param inputStream
+	 *            The {@link InputStream} containing the problem set
+	 * @return A list of the sums resulting sums given the queries
+	 */
+	public List<BigInteger> solveInBatch(InputStream inputStream) {
+		Scanner scanner = new Scanner(inputStream);
+		int t = scanner.nextInt();
+
+		List<BigInteger> sums = new ArrayList<BigInteger>();
+
+		for (int i = 0; i < t; i++) {
+			scanner.nextInt();
+
+			Map<Coordinate, BigInteger> coordinateValues = new HashMap<>();
+
+			int m = scanner.nextInt();
+
+			for (int j = 0; j < m; j++) {
+				String operation = scanner.next();
+				if ("UPDATE".equalsIgnoreCase(operation)) {
+					int x = scanner.nextInt();
+					int y = scanner.nextInt();
+					int z = scanner.nextInt();
+					BigInteger w = new BigInteger(scanner.next());
+					Coordinate coordinate = new Coordinate(x, y, z);
+					if (isCoordinateInRange(coordinate, MIN, MAX)) {
+						coordinateValues.put(coordinate, w);
+					}
+				} else if ("QUERY".equalsIgnoreCase(operation)) {
+					int x1 = scanner.nextInt();
+					int y1 = scanner.nextInt();
+					int z1 = scanner.nextInt();
+					int x2 = scanner.nextInt();
+					int y2 = scanner.nextInt();
+					int z2 = scanner.nextInt();
+					Coordinate c1 = new Coordinate(x1, y1, z1);
+					Coordinate c2 = new Coordinate(x2, y2, z2);
+					if (isCoordinateInRange(c1, MIN, MAX)
+							&& isCoordinateInRange(c2, MIN, MAX) && c1.lessOrEqualThan(c2)) {
+						BigInteger sum = sumInRange(coordinateValues, c1, c2);
+						sums.add(sum);
+					}
+				}
+			}
+		}
+
+		scanner.close();
+		
+		return sums;
 	}
 
 }
