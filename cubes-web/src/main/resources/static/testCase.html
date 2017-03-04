@@ -1,0 +1,40 @@
+<div class="form-group">
+  Test case id: {{testCaseCtrl.testCaseId}} -- Cube size: {{testCaseCtrl.cubeSize}}
+  <button class="btn btn-primary" ng-click="testCaseCtrl.solve()">Solve</button>
+  Query:
+  <input type="number" min="1" max="100" placeholder="x1" class="form-control" ng-model="testCaseCtrl.query.x1">
+  <input type="number" min="1" max="100" placeholder="y1" class="form-control" ng-model="testCaseCtrl.query.y1">
+  <input type="number" min="1" max="100" placeholder="z1" class="form-control" ng-model="testCaseCtrl.query.z1">
+  <input type="number" min="1" max="100" placeholder="x2" class="form-control" ng-model="testCaseCtrl.query.x2">
+  <input type="number" min="1" max="100" placeholder="y2" class="form-control" ng-model="testCaseCtrl.query.y2">
+  <input type="number" min="1" max="100" placeholder="z2" class="form-control" ng-model="testCaseCtrl.query.z2">
+  <button class="btn btn-primary" ng-click="testCaseCtrl.addQuery()">Add query</button>
+
+  <ul>
+    <li ng-repeat="query in testCaseCtrl.queries">
+      {{query.step}} - {{query.x1}} - {{query.y1}} - {{query.z1}} - {{query.x2}} - {{query.y2}} - {{query.z2}}
+    </li>
+  </ul>
+
+  Update:
+  <input type="number" min="1" max="100" placeholder="x" class="form-control" ng-model="testCaseCtrl.update.x">
+  <input type="number" min="1" max="100" placeholder="y" class="form-control" ng-model="testCaseCtrl.update.y">
+  <input type="number" min="1" max="100" placeholder="z" class="form-control" ng-model="testCaseCtrl.update.z">
+  <input type="number" min="1" max="100" placeholder="w" class="form-control" ng-model="testCaseCtrl.update.value">
+  <button class="btn btn-primary" ng-click="testCaseCtrl.addUpdate()">Add query</button>
+  <ul>
+    <li ng-repeat="update in testCaseCtrl.updates">
+      {{update.step}} - {{update.x}} - {{update.y}} - {{update.z}} - {{update.value}}
+    </li>
+  </ul>
+
+  Solution:
+  <ul>
+    <li ng-repeat="sum in testCaseCtrl.sums">
+      {{$index + 1}} --> {{sum}}
+    </li>
+  </ul>
+
+
+</div>
+<div class="error" ng-if="items.length === 0 && clicked">Nothing found</div>
