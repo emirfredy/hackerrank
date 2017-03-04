@@ -137,6 +137,7 @@ function TestCaseDirectiveController($scope, CubeService) {
       promise
         .then(function (result) {
           testCaseCtrl.sums = result;
+          console.log(testCaseCtrl.sums);
         })
         .catch(function () { });
   }

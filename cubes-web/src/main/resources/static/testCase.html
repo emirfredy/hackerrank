@@ -1,40 +1,120 @@
-<div class="form-group">
-  Test case id: {{testCaseCtrl.testCaseId}} -- Cube size: {{testCaseCtrl.cubeSize}}
-  <button class="btn btn-primary" ng-click="testCaseCtrl.solve()">Solve</button>
-  Query:
-  <input type="number" min="1" max="100" placeholder="x1" class="form-control" ng-model="testCaseCtrl.query.x1">
-  <input type="number" min="1" max="100" placeholder="y1" class="form-control" ng-model="testCaseCtrl.query.y1">
-  <input type="number" min="1" max="100" placeholder="z1" class="form-control" ng-model="testCaseCtrl.query.z1">
-  <input type="number" min="1" max="100" placeholder="x2" class="form-control" ng-model="testCaseCtrl.query.x2">
-  <input type="number" min="1" max="100" placeholder="y2" class="form-control" ng-model="testCaseCtrl.query.y2">
-  <input type="number" min="1" max="100" placeholder="z2" class="form-control" ng-model="testCaseCtrl.query.z2">
-  <button class="btn btn-primary" ng-click="testCaseCtrl.addQuery()">Add query</button>
+<div class="row">
+  <div class="col-md-12">
+    <h2>Test case id: {{testCaseCtrl.testCaseId}} -- Cube size: {{testCaseCtrl.cubeSize}}</h2>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4">
+    <div>
+      <h4>Queries</h4>
+    </div>
+    <form class="form-inline">
+      <div class="form-group">
+        <div class="row">
+          <input class="col-md-4" type="number" min="1" max="100" placeholder="x1" class="form-control" ng-model="testCaseCtrl.query.x1">
+          <input class="col-md-4" type="number" min="1" max="100" placeholder="y1" class="form-control" ng-model="testCaseCtrl.query.y1">
+          <input class="col-md-4" type="number" min="1" max="100" placeholder="z1" class="form-control" ng-model="testCaseCtrl.query.z1">
+        </div>
+        <div class="row">
+          <input class="col-md-4" type="number" min="1" max="100" placeholder="x2" class="form-control" ng-model="testCaseCtrl.query.x2">
+          <input class="col-md-4" type="number" min="1" max="100" placeholder="y2" class="form-control" ng-model="testCaseCtrl.query.y2">
+          <input class="col-md-4" type="number" min="1" max="100" placeholder="z2" class="form-control" ng-model="testCaseCtrl.query.z2">
+        </div>
+        <div class="row">
+          <button class="col-md-12 btn btn-info" type="submit" ng-click="testCaseCtrl.addQuery()">+</button>
+        </div>
+      </div>
+    </form>
+    <table class="row table table-striped" ng-if="testCaseCtrl.queries.length > 0">
+        <thead>
+            <tr>
+                <th>Step</th>
+                <th>x1</th>
+                <th>y1</th>
+                <th>z1</th>
+                <th>x2</th>
+                <th>y2</th>
+                <th>z2</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="query in testCaseCtrl.queries">
+                <td>{{query.step}}</td>
+                <td>{{query.x1}}</td>
+                <td>{{query.y1}}</td>
+                <td>{{query.z1}}</td>
+                <td>{{query.x2}}</td>
+                <td>{{query.y2}}</td>
+                <td>{{query.z2}}</td>
+            </tr>
+        </tbody>
+    </table>
 
-  <ul>
-    <li ng-repeat="query in testCaseCtrl.queries">
-      {{query.step}} - {{query.x1}} - {{query.y1}} - {{query.z1}} - {{query.x2}} - {{query.y2}} - {{query.z2}}
-    </li>
-  </ul>
+  </div>
 
-  Update:
-  <input type="number" min="1" max="100" placeholder="x" class="form-control" ng-model="testCaseCtrl.update.x">
-  <input type="number" min="1" max="100" placeholder="y" class="form-control" ng-model="testCaseCtrl.update.y">
-  <input type="number" min="1" max="100" placeholder="z" class="form-control" ng-model="testCaseCtrl.update.z">
-  <input type="number" min="1" max="100" placeholder="w" class="form-control" ng-model="testCaseCtrl.update.value">
-  <button class="btn btn-primary" ng-click="testCaseCtrl.addUpdate()">Add query</button>
-  <ul>
-    <li ng-repeat="update in testCaseCtrl.updates">
-      {{update.step}} - {{update.x}} - {{update.y}} - {{update.z}} - {{update.value}}
-    </li>
-  </ul>
+  <div class="col-md-4">
+    <div>
+      <h4>Updates</h4>
+    </div>
+    <form class="form-inline">
+      <div class="form-group">
+        <div class="row">
+          <input type="number" class="col-md-4" min="1" max="100" placeholder="x" class="form-control" ng-model="testCaseCtrl.update.x">
+          <input type="number" class="col-md-4" min="1" max="100" placeholder="y" class="form-control" ng-model="testCaseCtrl.update.y">
+          <input type="number" class="col-md-4" min="1" max="100" placeholder="z" class="form-control" ng-model="testCaseCtrl.update.z">
+        </div>
+        <div class="row">
+          <input type="number" class="col-md-12" min="1" max="1000000000" placeholder="w" class="form-control" ng-model="testCaseCtrl.update.value">
+        </div>
+        <div class="row">
+          <button class="col-md-12 btn btn-info" type="submit" ng-click="testCaseCtrl.addUpdate()">+</button>
+        </div>
 
-  Solution:
-  <ul>
-    <li ng-repeat="sum in testCaseCtrl.sums">
-      {{$index + 1}} --> {{sum}}
-    </li>
-  </ul>
+        <table class="row table table-striped" ng-if="testCaseCtrl.updates.length > 0">
+            <thead>
+                <tr>
+                    <th>Step</th>
+                    <th>x</th>
+                    <th>y</th>
+                    <th>z</th>
+                    <th>w</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="update in testCaseCtrl.updates">
+                    <td>{{update.step}}</td>
+                    <td>{{update.x}}</td>
+                    <td>{{update.y}}</td>
+                    <td>{{update.z}}</td>
+                    <td>{{update.value}}</td>
+                </tr>
+            </tbody>
+        </table>
+      </div>
+    </form>
+  </div>
 
-
+  <div class="col-md-4">
+    <div>
+      <h4>Solution</h4>
+    </div>
+    <form class="form-inline">
+        <div class="row">
+          <button class="col-md-12 btn btn-success" type="submit" ng-click="testCaseCtrl.solve()">Solve</button>
+        </div>
+    </form>
+    <table class="row table table-striped" ng-if="testCaseCtrl.sums.length > 0">
+        <thead>
+            <tr>
+                <th>Query result</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="sum in testCaseCtrl.sums">
+                <td>{{sum}}</td>
+            </tr>
+        </tbody>
+    </table>
+  </div>
 </div>
 <div class="error" ng-if="items.length === 0 && clicked">Nothing found</div>

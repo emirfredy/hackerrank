@@ -7,17 +7,24 @@
     <link rel="stylesheet" href="css/styles.css">
   </head>
 <body ng-app="CubeApp">
-   <div class="container" ng-controller="CubeController as cubeCtrl">
+<div>
+  <div class="container" ng-controller="CubeController as cubeCtrl">
     <h1>Cube Summation Solver</h1>
-
-    <div class="form-group">
-      Cube Size
-      <input type="number" min="1" max="100" placeholder="Enter cube size" class="form-control" ng-model="cubeCtrl.cubeSize">
-      <button class="btn btn-primary" ng-click="cubeCtrl.create()">Create test case</button>
-    </div>
-
+    <form class="form-inline">
+      <div class="form-group">
+        <label for="cubeSize">Cube Size</label>
+        <input type="number" min="1" max="100" placeholder="Enter cube size" class="form-control" ng-model="cubeCtrl.cubeSize" id="cubeSize">
+        <button class="btn btn-primary" type="submit" ng-click="cubeCtrl.create()">Create test case</button>
+      </div>
+    </form>
     <test-cases items="cubeCtrl.testCases">
+    </div>
   </div>
+</div>
+
+
+
+
   <script src="js/angular.min.js"></script>
   <script src="js/app.js"></script>
 </body>
