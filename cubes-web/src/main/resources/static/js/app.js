@@ -109,6 +109,7 @@ function TestCaseDirectiveController($scope, CubeService) {
   testCaseCtrl.query = {};
   testCaseCtrl.update = {};
   testCaseCtrl.sums = [];
+  testCaseCtrl.solved = false;
 
   testCaseCtrl.addQuery = function() {
     var promise = CubeService.addQuery(testCaseCtrl.testCaseId, testCaseCtrl.query);
@@ -136,8 +137,11 @@ function TestCaseDirectiveController($scope, CubeService) {
 	  var promise = CubeService.solve(testCaseCtrl.testCaseId);
       promise
         .then(function (result) {
-          testCaseCtrl.sums = result;
-          console.log(testCaseCtrl.sums);
+          var arrayLength = result.length;
+          for (var i = 0; i < arrayLength; i++) {
+              testCaseCtrl.sums.push({index: i, result: result[i]});
+          }
+          testCaseCtrl.solved = true;
         })
         .catch(function () { });
   }

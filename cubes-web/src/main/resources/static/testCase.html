@@ -3,92 +3,122 @@
     <h2>Test case id: {{testCaseCtrl.testCaseId}} -- Cube size: {{testCaseCtrl.cubeSize}}</h2>
   </div>
 </div>
-<div class="row">
+<div class="row container-fluid">
   <div class="col-md-4">
     <div>
       <h4>Queries</h4>
     </div>
-    <form class="form-inline">
-      <div class="form-group">
-        <div class="row">
-          <input class="col-md-4" type="number" min="1" max="100" placeholder="x1" class="form-control" ng-model="testCaseCtrl.query.x1">
-          <input class="col-md-4" type="number" min="1" max="100" placeholder="y1" class="form-control" ng-model="testCaseCtrl.query.y1">
-          <input class="col-md-4" type="number" min="1" max="100" placeholder="z1" class="form-control" ng-model="testCaseCtrl.query.z1">
+    <form class="form-inline" name="queryForm">
+      <div class="row">
+        <div class="col-md-4 form-group" required ng-class="{ 'has-error': queryForm.x1.$invalid }">
+          <input type="number" min="1" max={{testCaseCtrl.cubeSize}} name="x1" placeholder="x1" class="form-control" ng-model="testCaseCtrl.query.x1" required>
         </div>
-        <div class="row">
-          <input class="col-md-4" type="number" min="1" max="100" placeholder="x2" class="form-control" ng-model="testCaseCtrl.query.x2">
-          <input class="col-md-4" type="number" min="1" max="100" placeholder="y2" class="form-control" ng-model="testCaseCtrl.query.y2">
-          <input class="col-md-4" type="number" min="1" max="100" placeholder="z2" class="form-control" ng-model="testCaseCtrl.query.z2">
+        <div class="col-md-4 form-group" required ng-class="{ 'has-error': queryForm.y1.$invalid }">
+          <input type="number" min="1" max={{testCaseCtrl.cubeSize}} name="y1" placeholder="y1" class="form-control" ng-model="testCaseCtrl.query.y1" required>
         </div>
-        <div class="row">
-          <button class="col-md-12 btn btn-info" type="submit" ng-click="testCaseCtrl.addQuery()">+</button>
+        <div class="col-md-4 form-group" required ng-class="{ 'has-error': queryForm.z1.$invalid }">
+          <input type="number" min="1" max={{testCaseCtrl.cubeSize}} name="z1" placeholder="z1" class="form-control" ng-model="testCaseCtrl.query.z1" required>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 form-group" required ng-class="{ 'has-error': queryForm.x2.$invalid }">
+          <input type="number" min="1" max={{testCaseCtrl.cubeSize}} name="x2" placeholder="x2" class="form-control" ng-model="testCaseCtrl.query.x2" required>
+        </div>
+        <div class="col-md-4 form-group" required ng-class="{ 'has-error': queryForm.y2.$invalid }">
+          <input type="number" min="1" max={{testCaseCtrl.cubeSize}} name="y2" placeholder="y2" class="form-control" ng-model="testCaseCtrl.query.y2" required>
+        </div>
+        <div class="col-md-4 form-group" required ng-class="{ 'has-error': queryForm.z2.$invalid }">
+          <input type="number" min="1" max={{testCaseCtrl.cubeSize}} name="z2" placeholder="z2" class="form-control" ng-model="testCaseCtrl.query.z2" required>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-10">
+          <button class="col-md-12 btn btn-info" type="submit" ng-disabled="queryForm.$invalid || testCaseCtrl.solved" ng-click="testCaseCtrl.addQuery()">+</button>
+        </div>
+        <div class="col-md-1">
         </div>
       </div>
     </form>
     <table class="row table table-striped" ng-if="testCaseCtrl.queries.length > 0">
-        <thead>
-            <tr>
-                <th>Step</th>
-                <th>x1</th>
-                <th>y1</th>
-                <th>z1</th>
-                <th>x2</th>
-                <th>y2</th>
-                <th>z2</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="query in testCaseCtrl.queries">
-                <td>{{query.step}}</td>
-                <td>{{query.x1}}</td>
-                <td>{{query.y1}}</td>
-                <td>{{query.z1}}</td>
-                <td>{{query.x2}}</td>
-                <td>{{query.y2}}</td>
-                <td>{{query.z2}}</td>
-            </tr>
-        </tbody>
+      <thead>
+        <tr>
+          <th>Step</th>
+          <th>x1</th>
+          <th>y1</th>
+          <th>z1</th>
+          <th>x2</th>
+          <th>y2</th>
+          <th>z2</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="query in testCaseCtrl.queries">
+          <td>{{query.step}}</td>
+          <td>{{query.x1}}</td>
+          <td>{{query.y1}}</td>
+          <td>{{query.z1}}</td>
+          <td>{{query.x2}}</td>
+          <td>{{query.y2}}</td>
+          <td>{{query.z2}}</td>
+        </tr>
+      </tbody>
     </table>
-
   </div>
 
   <div class="col-md-4">
     <div>
       <h4>Updates</h4>
     </div>
-    <form class="form-inline">
+    <form class="form-inline" name="updateForm">
       <div class="form-group">
+
         <div class="row">
-          <input type="number" class="col-md-4" min="1" max="100" placeholder="x" class="form-control" ng-model="testCaseCtrl.update.x">
-          <input type="number" class="col-md-4" min="1" max="100" placeholder="y" class="form-control" ng-model="testCaseCtrl.update.y">
-          <input type="number" class="col-md-4" min="1" max="100" placeholder="z" class="form-control" ng-model="testCaseCtrl.update.z">
+          <div class="col-md-4 form-group" required ng-class="{ 'has-error': updateForm.x.$invalid }">
+            <input type="number" min="1" max={{testCaseCtrl.cubeSize}} name="x" placeholder="x" class="form-control" ng-model="testCaseCtrl.update.x" required>
+          </div>
+          <div class="col-md-4 form-group" required ng-class="{ 'has-error': updateForm.y.$invalid }">
+            <input type="number" min="1" max={{testCaseCtrl.cubeSize}} name="y" placeholder="y" class="form-control" ng-model="testCaseCtrl.update.y" required>
+          </div>
+          <div class="col-md-4 form-group" required ng-class="{ 'has-error': updateForm.z.$invalid }">
+            <input type="number" min="1" max={{testCaseCtrl.cubeSize}} name="z" placeholder="z" class="form-control" ng-model="testCaseCtrl.update.z" required>
+          </div>
         </div>
         <div class="row">
-          <input type="number" class="col-md-12" min="1" max="1000000000" placeholder="w" class="form-control" ng-model="testCaseCtrl.update.value">
+          <div class="col-md-12 form-group" required ng-class="{ 'has-error': updateForm.w.$invalid }">
+            <input type="number" name="w" min="1" max="100000000000" placeholder="w" class="form-control" ng-model="testCaseCtrl.update.value" required>
+          </div>
         </div>
         <div class="row">
-          <button class="col-md-12 btn btn-info" type="submit" ng-click="testCaseCtrl.addUpdate()">+</button>
+          <div class="col-md-1">
+          </div>
+          <div class="col-md-10">
+            <button class="col-md-12 btn btn-info" type="submit" ng-disabled="updateForm.$invalid || testCaseCtrl.solved" ng-click="testCaseCtrl.addUpdate()">+</button>
+          </div>
+          <div class="col-md-1">
+          </div>
         </div>
 
         <table class="row table table-striped" ng-if="testCaseCtrl.updates.length > 0">
-            <thead>
-                <tr>
-                    <th>Step</th>
-                    <th>x</th>
-                    <th>y</th>
-                    <th>z</th>
-                    <th>w</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="update in testCaseCtrl.updates">
-                    <td>{{update.step}}</td>
-                    <td>{{update.x}}</td>
-                    <td>{{update.y}}</td>
-                    <td>{{update.z}}</td>
-                    <td>{{update.value}}</td>
-                </tr>
-            </tbody>
+          <thead>
+            <tr>
+              <th>Step</th>
+              <th>x</th>
+              <th>y</th>
+              <th>z</th>
+              <th>w</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="update in testCaseCtrl.updates">
+              <td>{{update.step}}</td>
+              <td>{{update.x}}</td>
+              <td>{{update.y}}</td>
+              <td>{{update.z}}</td>
+              <td>{{update.value}}</td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </form>
@@ -100,7 +130,7 @@
     </div>
     <form class="form-inline">
         <div class="row">
-          <button class="col-md-12 btn btn-success" type="submit" ng-click="testCaseCtrl.solve()">Solve</button>
+          <button class="col-md-12 btn btn-success" type="submit" ng-disabled="testCaseCtrl.solved"  ng-click="testCaseCtrl.solve()">Solve</button>
         </div>
     </form>
     <table class="row table table-striped" ng-if="testCaseCtrl.sums.length > 0">
@@ -111,7 +141,7 @@
         </thead>
         <tbody>
             <tr ng-repeat="sum in testCaseCtrl.sums">
-                <td>{{sum}}</td>
+                <td>{{sum.result}}</td>
             </tr>
         </tbody>
     </table>
