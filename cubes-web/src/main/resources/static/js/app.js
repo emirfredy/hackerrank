@@ -1,19 +1,21 @@
 (function () {
 'use strict';
 
-angular.module('CubeApp', [])
+angular.module('CubeApp', ['ngFileUpload'])
 .controller('CubeController', CubeController)
 .service('CubeService', CubeService)
 .directive('testCases', TestCasesDirective)
 .directive('testCase', TestCaseDirective)
 .controller('TestCaseDirectiveController', TestCaseDirectiveController)
-.constant('ApiBasePath', "http://localhost:8080/api/problem");
+.constant('ApiBasePath', "/api/problem");
 
 CubeController.$inject = ['$scope', 'CubeService'];
 function CubeController($scope, CubeService) {
   var cubeCtrl = this;
   cubeCtrl.testCases = [];
+  cubeCtrl.sums = [];
   cubeCtrl.clicked = false;
+  cubeCtrl.mode = "Interactive";
   cubeCtrl.create = function() {
 	  cubeCtrl.clicked = true;
     if (!cubeCtrl.cubeSize || cubeCtrl > 0) {
@@ -31,10 +33,24 @@ function CubeController($scope, CubeService) {
   cubeCtrl.removeItem = function(index) {
 	  cubeCtrl.testCases.splice(index, 1);
   }
+
+  cubeCtrl.upload = function (file) {
+      cubeCtrl.sums = [];
+      var promise = CubeService.upload(file);
+      promise
+        .then(function (result) {
+          var arrayLength = result.length;
+          for (var i = 0; i < arrayLength; i++) {
+              cubeCtrl.sums.push({index: i, result: result[i]});
+          }
+        })
+        .catch(function () { });
+  };
+
 }
 
-CubeService.$inject = ['$http', 'ApiBasePath'];
-function CubeService($http, ApiBasePath) {
+CubeService.$inject = ['$http', 'ApiBasePath', 'Upload'];
+function CubeService($http, ApiBasePath, Upload) {
   var service = this;
   service.getSample = function(cubeSize) {
 	  return $http({
@@ -85,6 +101,20 @@ function CubeService($http, ApiBasePath) {
 	    }).then(function (result) {
 	    	return result.data;
 	    });
+  };
+
+  service.upload = function (file) {
+      return Upload.upload({
+          url: (ApiBasePath + "/batch"),
+          data: {file: file}
+      }).then(function (result) {
+          return result.data;
+      }, function (result) {
+          console.log('Error status: ' + result.status);
+      }, function (evt) {
+          var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+          console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+      });
   };
 }
 
