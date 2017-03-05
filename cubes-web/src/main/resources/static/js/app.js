@@ -1,7 +1,7 @@
 (function () {
 'use strict';
 
-angular.module('CubeApp', ['ngFileUpload'])
+angular.module('CubeApp', ['ngFileUpload', 'ui.bootstrap'])
 .controller('CubeController', CubeController)
 .service('CubeService', CubeService)
 .directive('testCases', TestCasesDirective)
@@ -24,7 +24,7 @@ function CubeController($scope, CubeService) {
       var promise = CubeService.create(cubeCtrl.cubeSize);
       promise
         .then(function (result) {
-          	cubeCtrl.testCases.push({id: result, size: cubeCtrl.cubeSize});
+          cubeCtrl.testCases.push({id: result, size: cubeCtrl.cubeSize});
         })
         .catch(function () { });
     }

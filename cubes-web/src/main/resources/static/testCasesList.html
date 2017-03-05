@@ -1,6 +1,8 @@
 <div ng-if="items.length > 0">
-  <div class="row" ng-repeat="item in items">
-    <test-case test-case-id="item.id" cube-size="item.size"> </test-case>
-  </div>
+  <uib-accordion close-others=true>
+    <div class="row" ng-repeat="item in items.slice().reverse()">
+      <test-case test-case-id="item.id" cube-size="item.size"> </test-case>
+    </div>
+  </uib-accordion>
 </div>
 <div class="error" ng-if="items.length === 0 && clicked">Nothing found</div>

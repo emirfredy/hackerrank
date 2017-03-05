@@ -55,5 +55,6 @@
   <script src="js/app.js"></script>
   <script src="js/ng-file-upload-shim.min.js"></script> <!-- for no html5 browsers support -->
   <script src="js/ng-file-upload.min.js"></script>
+  <script src="js/ui-bootstrap-tpls-2.5.0.min.js"></script>
 </body>
 </html>
